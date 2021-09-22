@@ -11,6 +11,8 @@ Created by Kenny
 import logging
 import random
 import datetime
+import config
+
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from dbhelper import DBHelper
@@ -88,7 +90,7 @@ def echo(update: Update, context: CallbackContext) -> None:
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater("1972437664:AAEdCIAU0GluXnqYsdem_mDpnYD7-H-yoqU")
+    updater = Updater(config.botKey)
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
