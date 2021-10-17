@@ -38,6 +38,10 @@ def start(update: Update, context: CallbackContext) -> None:
         reply_markup=ForceReply(selective=True),
     )
     db.add_item(update.message.chat_id, "", "")
+    update.message.reply_text("Add your streak using the /setstreak command")
+    update.message.reply_text("Like so: /setstreak 2020-03-16")
+
+
 
 def help(update, context):
     """Send a message when the command /help is issued."""
@@ -61,10 +65,6 @@ def setstreak(update, context):
     db.mod_streak(update.message.chat_id, str(context.args[0]))
     update.message.reply_text("Free from the chains since " + str(context.args[0]))
 
-def setchains(update, context):
-    db.mod_chains(update.message.chat_id, str(context.args[0]))
-    update.message.reply_text("Your chains are " + str(context.args[0]))
-
 def deleteData(update, context):
     db.delete_item(update.message.chat_id)
     update.message.reply_text("Your data has been erased.")
@@ -81,7 +81,7 @@ def streak(update, context):
     currentDate = datetime.date(currentYear, currentMonth, currentDay)
     streakLength = (currentDate-streakDate).days
     """
-    update.message.reply_text("Free from the chains of " + db.get_chains(update.message.chat_id)[0] + " since " + db.get_streak(update.message.chat_id)[0]) + "!"
+    update.message.reply_text("Free from the chains since " + db.get_streak(update.message.chat_id)[0]) + "!"
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
@@ -100,7 +100,6 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("help", help))
     dispatcher.add_handler(CommandHandler("about", about))
     dispatcher.add_handler(CommandHandler("setstreak", setstreak))
-    dispatcher.add_handler(CommandHandler("setchains", setchains))
     dispatcher.add_handler(CommandHandler("streak", streak))
     dispatcher.add_handler(CommandHandler("delete", deleteData))
     dispatcher.add_handler(CommandHandler("tempted", tempted))
