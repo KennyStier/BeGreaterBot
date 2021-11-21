@@ -25,12 +25,6 @@ class DBHelper:
         self.conn.execute(stmt, args)
         self.conn.commit()
 
-    def mod_chains(self, owner, chains):
-        stmt = "UPDATE userData SET chains = ? WHERE user = ?"
-        args = (chains, owner)
-        self.conn.execute(stmt, args)
-        self.conn.commit()
-
     def delete_item(self, owner):
         stmt = "DELETE FROM userData WHERE user = ?"
         args = (owner, )
@@ -39,10 +33,5 @@ class DBHelper:
 
     def get_streak(self, owner):
         stmt = "SELECT streakDate FROM userData WHERE user = ?"
-        args = (owner, )
-        return [x[0] for x in self.conn.execute(stmt, args)]
-
-    def get_chains(self, owner):
-        stmt = "SELECT chains FROM userData WHERE user = ?"
         args = (owner, )
         return [x[0] for x in self.conn.execute(stmt, args)]

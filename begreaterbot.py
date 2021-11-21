@@ -35,7 +35,6 @@ def start(update: Update, context: CallbackContext) -> None:
     user = update.effective_user
     update.message.reply_markdown_v2(
         fr'Hi, {user.mention_markdown_v2()}\!',
-        reply_markup=ForceReply(selective=True),
     )
     db.add_item(update.message.chat_id, "", "")
     update.message.reply_text("Add your streak using the /setstreak command")
