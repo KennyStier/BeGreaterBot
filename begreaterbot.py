@@ -36,7 +36,7 @@ def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_markdown_v2(
         fr'Hi, {user.mention_markdown_v2()}\!',
     )
-    db.add_item(update.message.chat_id, "", "")
+    db.add_item(update.message.from_user.id, "", "")
     update.message.reply_text("Add your streak using the /setstreak command")
     update.message.reply_text("Like so: /setstreak 2020-03-16")
 
@@ -61,11 +61,11 @@ def tempted(update, context):
     update.message.reply_text(random.choice(easeTemptation))
 
 def setstreak(update, context):
-    db.mod_streak(update.message.chat_id, str(context.args[0]))
+    db.mod_streak(update.message.from_user.id, str(context.args[0]))
     update.message.reply_text("Free from the chains since " + str(context.args[0]))
 
 def deleteData(update, context):
-    db.delete_item(update.message.chat_id)
+    db.delete_item(update.message.from_user.id)
     update.message.reply_text("Your data has been erased.")
 
 def streak(update, context):
@@ -80,7 +80,7 @@ def streak(update, context):
     currentDate = datetime.date(currentYear, currentMonth, currentDay)
     streakLength = (currentDate-streakDate).days
     """
-    update.message.reply_text("Free from the chains since " + db.get_streak(update.message.chat_id)[0]) + "!"
+    update.message.reply_text("Free from the chains since " + db.get_streak(update.message.from_user.id)[0]) + "!"
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
